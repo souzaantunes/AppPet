@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:app/data/store.dart';
 import 'package:app/exceptions/auth_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -53,6 +54,11 @@ class Auth with ChangeNotifier {
           seconds: int.parse(responseBody["expiresIn"]),
         ),
       );
+      Store.saveMap('userData', {
+        "token": _token,
+        "user": _userId,
+        "expiryDate": _expiryDate.toIso8601String(),
+      });
       _autoLogout();
       notifyListeners();
     }
@@ -67,18 +73,45 @@ class Auth with ChangeNotifier {
     return _authenticate(email, password, "signInWithPassword");
   }
 
+  Future<void> tryAutoLogin() async {
+    if (isAuth) {
+      return Future.value();
+    }
+    final userDate = await Store.getMap('userDate');
+
+    if (userDate == null) {
+      return Future.value();
+    }
+
+    final expiryDate = DateTime.parse(userDate['expiryDate']);
+
+    if (expiryDate.isBefore(DateTime.now())) {
+      return Future.value();
+    }
+    _userId = userDate["userId"];
+    _token = userDate["token"];
+    _expiryDate = expiryDate;
+
+    _autoLogout();
+    notifyListeners();
+
+    return Future.value();
+  }
+
   void logout() {
     _token = null;
     _userId = null;
     _expiryDate = null;
-    if(_logoutTimer != null){
+    if (_logoutTimer != null) {
       _logoutTimer.cancel();
       _logoutTimer = null;
     }
+    Store.remove('userDate');
     notifyListeners();
   }
-  void _autoLogout(){
-    if(_logoutTimer != null){
+
+  void _autoLogout() {
+    if (_logoutTimer != null) {
       _logoutTimer.cancel();
     }
 

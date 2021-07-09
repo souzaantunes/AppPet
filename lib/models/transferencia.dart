@@ -7,7 +7,7 @@ class Transferencia with ChangeNotifier {
   final String telefone;
   final String endereco;
   final String pacoteDeBanho;
-  final String dataPagamento;
+  final DateTime dataPagamento;
   final double valor;
   final DateTime datacadastro = DateTime.now();
 
