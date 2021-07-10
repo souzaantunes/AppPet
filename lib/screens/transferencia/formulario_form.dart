@@ -2,6 +2,7 @@ import 'package:app/models/transferencia.dart';
 import 'package:app/providers/transferencias.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_datetime_formfield/flutter_datetime_formfield.dart';
 
 import 'package:provider/provider.dart';
 
@@ -18,8 +19,7 @@ class FormularioFormTransferenciaState
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
   bool _isLoading = false;
-
-  String _data;
+  DateTime _data;
 
   @override
   void didChangeDependencies() {
@@ -56,10 +56,7 @@ class FormularioFormTransferenciaState
       valor: _formData['valor'],
     );
 
-    initState(){
-       _data = "";
-       super.initState();
-    }
+    print(novaTransferencia.dataPagamento);
 
     setState(() {
       _isLoading = true;
@@ -160,36 +157,13 @@ class FormularioFormTransferenciaState
                       ),
                       onSaved: (value) => _formData['pacoteDeBanho'] = value,
                     ),
-                    TextFormField(
-                      initialValue: "data 5",
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        // labelText: 'Data',
-                        // hintText: "12/12/1999",
-                        icon: Icon(Icons.date_range),
-                      ),
-                      onSaved: (value) =>
-                          _formData['dataPagamento'] = DateTime.parse(value),
-                      readOnly: true,
-                      onTap: () async {
-                        DateTime dataCalendario = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2021),
-                            lastDate: DateTime(2025));
+                    DateTimeFormField(
 
-                        if (dataCalendario != null) {
-                          String dataFormatada =
-                              DateFormat('dd/MM/yyyy').format(dataCalendario);
-                          print(dataFormatada);
-                          setState(() {
-                            _data = dataFormatada;
-                          });
-
-                        } else {
-                          print("Erro na data");
-                        }
-                      },
+                      initialValue: DateTime.now(),
+                       label: "Data",
+                        formatter: DateFormat("dd/MM/yyyy"),
+                      onSaved: (DateTime value) =>
+                          _formData['dataPagamento'] = value,
                     ),
                     TextFormField(
                       initialValue: _formData['valor'].toString(),

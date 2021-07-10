@@ -3,6 +3,7 @@ import 'package:app/models/transferencia.dart';
 import 'package:app/providers/transferencias.dart';
 import 'package:app/screens/App_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ItemTransferencia extends StatelessWidget {
@@ -17,6 +18,8 @@ class ItemTransferencia extends StatelessWidget {
     );
   }
 
+  // final DateFormat formatDate = DateFormat('dd/MM/yyyy');
+  // formatDate.format(_transferencia.dataPagamento).toString()
   @override
   Widget build(BuildContext context) {
     final scaffold = Scaffold.of(context);

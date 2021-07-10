@@ -59,9 +59,8 @@ class Transferencias with ChangeNotifier {
         'telefone': newTransfer.telefone,
         'endereco': newTransfer.endereco,
         'pacoteDeBanho': newTransfer.pacoteDeBanho,
-        'dataPagamento': newTransfer.dataPagamento,
+        'dataPagamento': newTransfer.dataPagamento.toString(),
         'valor': newTransfer.valor,
-        // 'datacadastro': newTransfer.datacadastro,
       }),
     );
 
