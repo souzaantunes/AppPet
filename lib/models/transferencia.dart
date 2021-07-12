@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Transferencia with ChangeNotifier {
   final String id;
@@ -21,6 +22,20 @@ class Transferencia with ChangeNotifier {
       this.pacoteDeBanho,
       this.dataPagamento,
       this.valor});
+
+      String formatData(DateTime data) {
+
+       return DateFormat('dd/MM/yyyy').format(data);
+
+
+    }
+
+
+    DateTime parseData(String data){
+      return DateTime.parse(data);
+    }
+
+
 
   // @override
   // String toString() {

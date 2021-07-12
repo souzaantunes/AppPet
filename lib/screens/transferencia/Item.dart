@@ -9,6 +9,12 @@ import 'package:provider/provider.dart';
 class ItemTransferencia extends StatelessWidget {
   final Transferencia _transferencia;
 
+
+
+
+  //
+
+
   const ItemTransferencia(this._transferencia);
 
   void _selectTransferencia(BuildContext context) {
@@ -22,13 +28,14 @@ class ItemTransferencia extends StatelessWidget {
   // formatDate.format(_transferencia.dataPagamento).toString()
   @override
   Widget build(BuildContext context) {
+    var formatData = this._transferencia.formatData(this._transferencia.dataPagamento);
     final scaffold = Scaffold.of(context);
     return Card(
         child: ListTile(
       onTap: () => _selectTransferencia(context),
       leading: Icon(Icons.account_circle),
       title: Text(_transferencia.nomeDono.toString()),
-      subtitle: Text(_transferencia.dataPagamento.toString(),
+      subtitle: Text(formatData,
           style: TextStyle(color: Colors.green)),
       // trailing: Text(_transferencia.dataPagamento.toString()),
       trailing: Container(

@@ -24,6 +24,7 @@ class Transferencias with ChangeNotifier {
   }
 
   Future<void> loadTransferencia() async {
+    Transferencia transfere ;
     final response = await http.get("$_baseUrl.json?auth=$_token");
 
     Map<String, dynamic> data = json.decode(response.body);
@@ -33,13 +34,14 @@ class Transferencias with ChangeNotifier {
       data.forEach((transferenciaID, transferenciaData) {
         _transferencias.add(
           Transferencia(
+
             id: transferenciaID,
             nomedoCachorro: transferenciaData['nomedoCachorro'],
             nomeDono: transferenciaData['nomeDono'],
             telefone: transferenciaData['telefone'],
             endereco: transferenciaData['endereco'],
             pacoteDeBanho: transferenciaData['pacoteDeBanho'],
-            dataPagamento: transferenciaData['dataPagamento'],
+            dataPagamento:  transfere.parseData(transferenciaData['dataPagamento']),
             valor: transferenciaData['valor'],
           ),
         );
@@ -59,7 +61,7 @@ class Transferencias with ChangeNotifier {
         'telefone': newTransfer.telefone,
         'endereco': newTransfer.endereco,
         'pacoteDeBanho': newTransfer.pacoteDeBanho,
-        'dataPagamento': newTransfer.dataPagamento.toString(),
+        'dataPagamento': newTransfer.formatData(newTransfer.dataPagamento),
         'valor': newTransfer.valor,
       }),
     );
@@ -94,7 +96,7 @@ class Transferencias with ChangeNotifier {
           'telefone': transferencia.telefone,
           'endereco': transferencia.endereco,
           'pacoteDeBanho': transferencia.pacoteDeBanho,
-          'dataPagamento': transferencia.dataPagamento,
+          'dataPagamento': transferencia.formatData(transferencia.dataPagamento),
           'valor': transferencia.valor,
         }),
       );

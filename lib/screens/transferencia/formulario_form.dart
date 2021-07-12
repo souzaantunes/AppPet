@@ -39,6 +39,7 @@ class FormularioFormTransferenciaState
         _formData['valor'] = transferencia.valor;
       } else {
         _formData['valor'] = '';
+        _formData['dataPagamento'] = DateTime.now();
       }
     }
   }
@@ -159,7 +160,7 @@ class FormularioFormTransferenciaState
                     ),
                     DateTimeFormField(
 
-                      initialValue: DateTime.now(),
+                      initialValue:_formData['dataPagamento'] ,
                        label: "Data",
                         formatter: DateFormat("dd/MM/yyyy"),
                       onSaved: (DateTime value) =>
