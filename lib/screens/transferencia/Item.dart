@@ -3,7 +3,7 @@ import 'package:app/models/transferencia.dart';
 import 'package:app/providers/transferencias.dart';
 import 'package:app/screens/App_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import 'package:provider/provider.dart';
 
 class ItemTransferencia extends StatelessWidget {

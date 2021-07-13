@@ -19,7 +19,7 @@ class FormularioFormTransferenciaState
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
   bool _isLoading = false;
-  DateTime _data;
+  final Transferencia transfere = new Transferencia();
 
   @override
   void didChangeDependencies() {
@@ -39,7 +39,7 @@ class FormularioFormTransferenciaState
         _formData['valor'] = transferencia.valor;
       } else {
         _formData['valor'] = '';
-        _formData['dataPagamento'] = DateTime.now();
+        // _formData['dataPagamento'] = DateTime.now();
       }
     }
   }
@@ -53,11 +53,11 @@ class FormularioFormTransferenciaState
       telefone: _formData['telefone'],
       endereco: _formData['endereco'],
       pacoteDeBanho: _formData['pacoteDeBanho'],
-      dataPagamento: _formData['dataPagamento'],
+      dataPagamento: transfere.parseData(_formData['dataPagamento']),
       valor: _formData['valor'],
     );
 
-    print(novaTransferencia.dataPagamento);
+    // print(novaTransferencia.dataPagamento);
 
     setState(() {
       _isLoading = true;

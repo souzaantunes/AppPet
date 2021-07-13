@@ -9,13 +9,12 @@ import 'package:provider/provider.dart';
 import 'Item.dart';
 
 class ListTransferencia extends StatefulWidget {
-  final List<Transferencia> _transferencia = [];
-
   @override
   State<StatefulWidget> createState() {
     return ListaTransferenciaState();
   }
 }
+
 
 class ListaTransferenciaState extends State<ListTransferencia> {
   // Transferencia transferencia;

@@ -13,7 +13,7 @@ class Transferencias with ChangeNotifier {
   List<Transferencia> _transferencias = [];
 
   List<Transferencia> get transferencias => [..._transferencias];
-
+  Transferencia transfere ;
   String _token;
   String _userId;
 
@@ -24,7 +24,7 @@ class Transferencias with ChangeNotifier {
   }
 
   Future<void> loadTransferencia() async {
-    Transferencia transfere ;
+
     final response = await http.get("$_baseUrl.json?auth=$_token");
 
     Map<String, dynamic> data = json.decode(response.body);
@@ -41,7 +41,7 @@ class Transferencias with ChangeNotifier {
             telefone: transferenciaData['telefone'],
             endereco: transferenciaData['endereco'],
             pacoteDeBanho: transferenciaData['pacoteDeBanho'],
-            dataPagamento:  transfere.parseData(transferenciaData['dataPagamento']),
+            dataPagamento: transfere.parseData(transferenciaData['dataPagamento']) ,
             valor: transferenciaData['valor'],
           ),
         );
@@ -61,7 +61,8 @@ class Transferencias with ChangeNotifier {
         'telefone': newTransfer.telefone,
         'endereco': newTransfer.endereco,
         'pacoteDeBanho': newTransfer.pacoteDeBanho,
-        'dataPagamento': newTransfer.formatData(newTransfer.dataPagamento),
+        // 'dataPagamento': newTransfer.dataPagamento,
+        'dataPagamento': newTransfer.parseData(newTransfer.formatData(newTransfer.dataPagamento)) ,
         'valor': newTransfer.valor,
       }),
     );
@@ -85,6 +86,8 @@ class Transferencias with ChangeNotifier {
     if (transferencia == null || transferencia.id == null) {
       return;
     }
+
+    print(transferencia.dataPagamento);
     final index = _transferencias
         .indexWhere((transfer) => transfer.id == transferencia.id);
     if (index >= 0) {
@@ -96,6 +99,7 @@ class Transferencias with ChangeNotifier {
           'telefone': transferencia.telefone,
           'endereco': transferencia.endereco,
           'pacoteDeBanho': transferencia.pacoteDeBanho,
+          // 'dataPagamento': transferencia.dataPagamento,
           'dataPagamento': transferencia.formatData(transferencia.dataPagamento),
           'valor': transferencia.valor,
         }),
