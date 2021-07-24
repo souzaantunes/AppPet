@@ -15,33 +15,28 @@ class ListTransferencia extends StatefulWidget {
   }
 }
 
-
 class ListaTransferenciaState extends State<ListTransferencia> {
-  // Transferencia transferencia;
   bool _isLoading = true;
 
-  Future<void> _refreshTransferencia(BuildContext context) {
+  Future<void> _refreshTransferencia(BuildContext context) async {
     return Provider.of<Transferencias>(context, listen: false)
-        .loadTransferencia();
-  }
+        .loadTransferencia();}
 
   @override
   void initState() {
     super.initState();
-
     Provider.of<Transferencias>(context, listen: false)
         .loadTransferencia()
         .then((_) {
-      setState(() {
-        _isLoading = false;
-      });
+    setState(() {
+      _isLoading = false;
+    });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Transferencia> transfer =
-        Provider.of<Transferencias>(context).transferencias;
+    final transfer = Provider.of<Transferencias>(context).transferencias;
     return Scaffold(
       appBar: AppBar(
         title: Text('Cadastros de Banho'),

@@ -29,6 +29,7 @@ dependencies:
   shared_preferences: ^0.5.7+3
   date_format: ^2.0.2
   flutter_datetime_formfield: ^0.1.2
+  mask_text_input_formatter: ^2.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/exceptions/http_exception.dart';
+import 'package:app/util/DateUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,7 +14,6 @@ class Transferencias with ChangeNotifier {
   List<Transferencia> _transferencias = [];
 
   List<Transferencia> get transferencias => [..._transferencias];
-  Transferencia transfere ;
   String _token;
   String _userId;
 
@@ -24,31 +24,26 @@ class Transferencias with ChangeNotifier {
   }
 
   Future<void> loadTransferencia() async {
-
-    final response = await http.get("$_baseUrl.json?auth=$_token");
-
+    final response = await http.get("$_baseUrl/$_userId.json?auth=$_token");
     Map<String, dynamic> data = json.decode(response.body);
-
     _transferencias.clear();
     if (data != null) {
       data.forEach((transferenciaID, transferenciaData) {
         _transferencias.add(
           Transferencia(
-
             id: transferenciaID,
             nomedoCachorro: transferenciaData['nomedoCachorro'],
             nomeDono: transferenciaData['nomeDono'],
             telefone: transferenciaData['telefone'],
             endereco: transferenciaData['endereco'],
             pacoteDeBanho: transferenciaData['pacoteDeBanho'],
-            dataPagamento: transfere.parseData(transferenciaData['dataPagamento']) ,
+            dataPagamento: transferenciaData['dataPagamento'],
             valor: transferenciaData['valor'],
           ),
         );
       });
       notifyListeners();
     }
-
     return Future.value();
   }
 
@@ -61,12 +56,10 @@ class Transferencias with ChangeNotifier {
         'telefone': newTransfer.telefone,
         'endereco': newTransfer.endereco,
         'pacoteDeBanho': newTransfer.pacoteDeBanho,
-        // 'dataPagamento': newTransfer.dataPagamento,
-        'dataPagamento': newTransfer.parseData(newTransfer.formatData(newTransfer.dataPagamento)) ,
+        'dataPagamento': newTransfer.dataPagamento,
         'valor': newTransfer.valor,
       }),
     );
-
     _transferencias.add(
       Transferencia(
         id: json.decode(response.body)['name'],
@@ -99,8 +92,7 @@ class Transferencias with ChangeNotifier {
           'telefone': transferencia.telefone,
           'endereco': transferencia.endereco,
           'pacoteDeBanho': transferencia.pacoteDeBanho,
-          // 'dataPagamento': transferencia.dataPagamento,
-          'dataPagamento': transferencia.formatData(transferencia.dataPagamento),
+          'dataPagamento': transferencia.dataPagamento,
           'valor': transferencia.valor,
         }),
       );

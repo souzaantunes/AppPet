@@ -1,9 +1,8 @@
 import 'package:app/models/transferencia.dart';
 import 'package:app/providers/transferencias.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter_datetime_formfield/flutter_datetime_formfield.dart';
 
+import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 class FormularioFormTransferencia extends StatefulWidget {
@@ -15,16 +14,19 @@ class FormularioFormTransferencia extends StatefulWidget {
 
 class FormularioFormTransferenciaState
     extends State<FormularioFormTransferencia> {
-  // final _priceFocusNode = FocusNode();
+  final formatterPhone = MaskTextInputFormatter(mask: '+## (##) ###-##-##');
+  final formatterDate = MaskTextInputFormatter(mask: '##/##/####');
+  final _priceFocusNode = FocusNode();
+  final _valorFocusNode = FocusNode();
+  final _dataFocusNode = FocusNode();
+  final _telefoneFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
   bool _isLoading = false;
-  final Transferencia transfere = new Transferencia();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
     if (_formData.isEmpty) {
       final transferencia =
           ModalRoute.of(context).settings.arguments as Transferencia;
@@ -39,9 +41,17 @@ class FormularioFormTransferenciaState
         _formData['valor'] = transferencia.valor;
       } else {
         _formData['valor'] = '';
-        // _formData['dataPagamento'] = DateTime.now();
       }
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _priceFocusNode.dispose();
+    _valorFocusNode.dispose();
+    _dataFocusNode.dispose();
+    _telefoneFocusNode.dispose();
   }
 
   Future<void> _saveForm() async {
@@ -53,18 +63,14 @@ class FormularioFormTransferenciaState
       telefone: _formData['telefone'],
       endereco: _formData['endereco'],
       pacoteDeBanho: _formData['pacoteDeBanho'],
-      dataPagamento: transfere.parseData(_formData['dataPagamento']),
+      dataPagamento: _formData['dataPagamento'],
       valor: _formData['valor'],
     );
-
-    // print(novaTransferencia.dataPagamento);
-
     setState(() {
       _isLoading = true;
     });
     final umaTransferencia =
         Provider.of<Transferencias>(context, listen: false);
-
     try {
       if (_formData['id'] == null) {
         await umaTransferencia.addTransferencia(novaTransferencia);
@@ -103,7 +109,7 @@ class FormularioFormTransferenciaState
               child: CircularProgressIndicator(),
             )
           : Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(20.0),
               child: Form(
                 key: _form,
                 child: ListView(
@@ -128,7 +134,11 @@ class FormularioFormTransferenciaState
                         labelText: 'Nome do Dono',
                         icon: Icon(Icons.people),
                       ),
-                      textInputAction: TextInputAction.next,
+                      // textInputAction: TextInputAction.next,
+                      // focusNode: _priceFocusNode,
+                      // onFieldSubmitted: (_) {
+                      //   FocusScope.of(context).requestFocus(_priceFocusNode);
+                      // },
                       onSaved: (value) => _formData['nomeDono'] = value,
                     ),
                     TextFormField(
@@ -138,6 +148,13 @@ class FormularioFormTransferenciaState
                         labelText: 'Telefone',
                         icon: Icon(Icons.phone_bluetooth_speaker_rounded),
                       ),
+                      keyboardType: TextInputType.phone,
+                      inputFormatters: [formatterPhone],
+                      // textInputAction: TextInputAction.next,
+                      // focusNode: _telefoneFocusNode,
+                      // onFieldSubmitted: (_) {
+                      //   FocusScope.of(context).requestFocus(_telefoneFocusNode);
+                      // },
                       onSaved: (value) => _formData['telefone'] = value,
                     ),
                     TextFormField(
@@ -147,6 +164,11 @@ class FormularioFormTransferenciaState
                         labelText: 'Endereço',
                         icon: Icon(Icons.home),
                       ),
+                      // textInputAction: TextInputAction.next,
+                      // focusNode: _priceFocusNode,
+                      // onFieldSubmitted: (_) {
+                      //   FocusScope.of(context).requestFocus(_priceFocusNode);
+                      // },
                       onSaved: (value) => _formData['endereco'] = value,
                     ),
                     TextFormField(
@@ -156,15 +178,27 @@ class FormularioFormTransferenciaState
                         labelText: 'Pacote?',
                         hintText: "Sim/Nao",
                       ),
+                      // textInputAction: TextInputAction.next,
+                      // focusNode: _priceFocusNode,
+                      // onFieldSubmitted: (_) {
+                      //   FocusScope.of(context).requestFocus(_priceFocusNode);
+                      // },
                       onSaved: (value) => _formData['pacoteDeBanho'] = value,
                     ),
-                    DateTimeFormField(
-
-                      initialValue:_formData['dataPagamento'] ,
-                       label: "Data",
-                        formatter: DateFormat("dd/MM/yyyy"),
-                      onSaved: (DateTime value) =>
-                          _formData['dataPagamento'] = value,
+                    TextFormField(
+                      initialValue: _formData['dataPagamento'],
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Data",
+                      ),
+                      inputFormatters: [formatterDate],
+                      keyboardType: TextInputType.datetime,
+                      // textInputAction: TextInputAction.next,
+                      // focusNode: _dataFocusNode,
+                      // onFieldSubmitted: (_) {
+                      //   FocusScope.of(context).requestFocus(_dataFocusNode);
+                      // },
+                      onSaved: (value) => _formData['dataPagamento'] = value,
                     ),
                     TextFormField(
                       initialValue: _formData['valor'].toString(),
@@ -176,6 +210,8 @@ class FormularioFormTransferenciaState
                       keyboardType: TextInputType.numberWithOptions(
                         decimal: true,
                       ),
+                      textInputAction: TextInputAction.done,
+                      // focusNode: _valorFocusNode,
                       onSaved: (value) =>
                           _formData['valor'] = double.parse(value),
                     ),

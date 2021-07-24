@@ -1,22 +1,18 @@
+import 'package:intl/intl.dart';
+
 class DateUtil {
 
-//   readOnly: true,
-//
-//   onTap: () async {
-//   // DateTime dataCalendario = await
-//   await showDatePicker(
-//   context: context,
-//   initialDate: DateTime.now(),
-//   firstDate: DateTime(2021),
-//   lastDate: DateTime(2025)).then((data) {
-//   setState(() {
-//   _formData[ data];
-//   });
-//   });
-// // String dataFormatada =
-// // DateFormat('dd/MM/yyyy').format(dataCalendario);
-// // print(dataCalendario);
-// // data = dataCalendario;
+ String formatTimestamp (int timestamp) {
+   var format = new DateFormat ('dd/MM/yyyy');
+   var date = new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+   return format.format(date);
+ }
 
-// },
+ DateTime convertTimeStampToDateTime(int timeStamp) {
+   var dateToTimeStamp = DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
+   return dateToTimeStamp;
+ }
+ String formatData(DateTime data) {return DateFormat('dd/MM/yyyy').format(data);}
+
+ DateTime parseData(String data) {return DateTime.parse(data);}
 }
