@@ -51,15 +51,13 @@ class ListaTransferenciaState extends State<ListTransferencia> {
         ],
       ),
       body: _isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
+          ? Center(child: CircularProgressIndicator(),)
           : RefreshIndicator(
               onRefresh: () => _refreshTransferencia(context),
               child: ListView.builder(
                 itemCount: transfer.length,
                 itemBuilder: (context, indice) =>
-                    ItemTransferencia(transfer[indice]),
+                 ItemTransferencia(transfer[indice]),
               ),
             ),
       floatingActionButton: FloatingActionButton(

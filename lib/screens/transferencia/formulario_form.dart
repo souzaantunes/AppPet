@@ -1,5 +1,6 @@
 import 'package:app/models/transferencia.dart';
 import 'package:app/providers/transferencias.dart';
+import 'package:app/util/DateUtil.dart';
 
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -14,12 +15,15 @@ class FormularioFormTransferencia extends StatefulWidget {
 
 class FormularioFormTransferenciaState
     extends State<FormularioFormTransferencia> {
-  final formatterPhone = MaskTextInputFormatter(mask: '+## (##) ###-##-##');
+  final formatterPhone = MaskTextInputFormatter(mask: '+## (##) #####-####');
   final formatterDate = MaskTextInputFormatter(mask: '##/##/####');
   final _priceFocusNode = FocusNode();
   final _valorFocusNode = FocusNode();
   final _dataFocusNode = FocusNode();
+  final _focusNode = FocusNode();
+  final _banhoFocusNode = FocusNode();
   final _telefoneFocusNode = FocusNode();
+
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
   bool _isLoading = false;
@@ -52,6 +56,8 @@ class FormularioFormTransferenciaState
     _valorFocusNode.dispose();
     _dataFocusNode.dispose();
     _telefoneFocusNode.dispose();
+    _banhoFocusNode.dispose();
+    _focusNode.dispose();
   }
 
   Future<void> _saveForm() async {
@@ -101,6 +107,7 @@ class FormularioFormTransferenciaState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         title: Text('Cadastro'),
       ),
@@ -109,7 +116,7 @@ class FormularioFormTransferenciaState
               child: CircularProgressIndicator(),
             )
           : Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(23.0),
               child: Form(
                 key: _form,
                 child: ListView(
@@ -121,10 +128,10 @@ class FormularioFormTransferenciaState
                         labelText: 'Nome do Pet',
                         icon: Icon(Icons.pets),
                       ),
-                      // textInputAction: TextInputAction.next,
-                      // onFieldSubmitted: (_) {
-                      //   FocusScope.of(context).requestFocus(_priceFocusNode);
-                      // },
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_priceFocusNode);
+                      },
                       onSaved: (value) => _formData['nomedoCachorro'] = value,
                     ),
                     TextFormField(
@@ -134,11 +141,8 @@ class FormularioFormTransferenciaState
                         labelText: 'Nome do Dono',
                         icon: Icon(Icons.people),
                       ),
-                      // textInputAction: TextInputAction.next,
-                      // focusNode: _priceFocusNode,
-                      // onFieldSubmitted: (_) {
-                      //   FocusScope.of(context).requestFocus(_priceFocusNode);
-                      // },
+                      textInputAction: TextInputAction.next,
+                      focusNode: _priceFocusNode,
                       onSaved: (value) => _formData['nomeDono'] = value,
                     ),
                     TextFormField(
@@ -150,11 +154,8 @@ class FormularioFormTransferenciaState
                       ),
                       keyboardType: TextInputType.phone,
                       inputFormatters: [formatterPhone],
-                      // textInputAction: TextInputAction.next,
-                      // focusNode: _telefoneFocusNode,
-                      // onFieldSubmitted: (_) {
-                      //   FocusScope.of(context).requestFocus(_telefoneFocusNode);
-                      // },
+                      textInputAction: TextInputAction.next,
+                      focusNode: _telefoneFocusNode,
                       onSaved: (value) => _formData['telefone'] = value,
                     ),
                     TextFormField(
@@ -164,11 +165,8 @@ class FormularioFormTransferenciaState
                         labelText: 'Endereço',
                         icon: Icon(Icons.home),
                       ),
-                      // textInputAction: TextInputAction.next,
-                      // focusNode: _priceFocusNode,
-                      // onFieldSubmitted: (_) {
-                      //   FocusScope.of(context).requestFocus(_priceFocusNode);
-                      // },
+                      textInputAction: TextInputAction.next,
+                      focusNode: _focusNode,
                       onSaved: (value) => _formData['endereco'] = value,
                     ),
                     TextFormField(
@@ -177,27 +175,23 @@ class FormularioFormTransferenciaState
                         border: OutlineInputBorder(),
                         labelText: 'Pacote?',
                         hintText: "Sim/Nao",
+                        icon: Icon(Icons.home_repair_service_rounded)
                       ),
-                      // textInputAction: TextInputAction.next,
-                      // focusNode: _priceFocusNode,
-                      // onFieldSubmitted: (_) {
-                      //   FocusScope.of(context).requestFocus(_priceFocusNode);
-                      // },
+                      textInputAction: TextInputAction.next,
+                      focusNode: _banhoFocusNode,
                       onSaved: (value) => _formData['pacoteDeBanho'] = value,
                     ),
                     TextFormField(
                       initialValue: _formData['dataPagamento'],
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
+                        icon: Icon(Icons.date_range_outlined),
                         labelText: "Data",
                       ),
                       inputFormatters: [formatterDate],
                       keyboardType: TextInputType.datetime,
-                      // textInputAction: TextInputAction.next,
-                      // focusNode: _dataFocusNode,
-                      // onFieldSubmitted: (_) {
-                      //   FocusScope.of(context).requestFocus(_dataFocusNode);
-                      // },
+                      textInputAction: TextInputAction.next,
+                      focusNode: _dataFocusNode,
                       onSaved: (value) => _formData['dataPagamento'] = value,
                     ),
                     TextFormField(
@@ -211,7 +205,7 @@ class FormularioFormTransferenciaState
                         decimal: true,
                       ),
                       textInputAction: TextInputAction.done,
-                      // focusNode: _valorFocusNode,
+                      focusNode: _valorFocusNode,
                       onSaved: (value) =>
                           _formData['valor'] = double.parse(value),
                     ),

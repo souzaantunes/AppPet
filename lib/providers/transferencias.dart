@@ -10,7 +10,6 @@ import '../models/transferencia.dart';
 class Transferencias with ChangeNotifier {
   final _baseUrl =
       'https://flutter-elton-default-rtdb.firebaseio.com/transferencias';
-
   List<Transferencia> _transferencias = [];
 
   List<Transferencia> get transferencias => [..._transferencias];
@@ -79,8 +78,6 @@ class Transferencias with ChangeNotifier {
     if (transferencia == null || transferencia.id == null) {
       return;
     }
-
-    print(transferencia.dataPagamento);
     final index = _transferencias
         .indexWhere((transfer) => transfer.id == transferencia.id);
     if (index >= 0) {
@@ -109,14 +106,12 @@ class Transferencias with ChangeNotifier {
       notifyListeners();
       final response = await http
           .delete("$_baseUrl/$_userId/${transferencias.id}.json?auth=$_token");
-
       if (response.statusCode >= 400) {
         _transferencias.insert(index, transferencias);
         notifyListeners();
         throw HttpException('Ocorreu um problena na exclusao do Cdastro');
       }
       // _transferencias.removeWhere((transfer) => transfer.id == id);
-
     }
   }
 }

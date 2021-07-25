@@ -1,14 +1,18 @@
+import 'dart:ui';
+
 import 'package:app/screens/login/auth_card.dart';
 import 'package:flutter/material.dart';
 
 class TelaLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
+    return Center(
+      child: Scaffold(
+        body: Stack(
+          alignment: AlignmentDirectional.centerEnd,
           children: <Widget>[
             Container(
+              alignment: AlignmentDirectional.centerEnd,
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                 colors: [
@@ -20,6 +24,7 @@ class TelaLogin extends StatelessWidget {
               )),
             ),
             Container(
+              alignment: Alignment.center,
               width: double.infinity,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +48,7 @@ class TelaLogin extends StatelessWidget {
                       ],
                     ),
                     child: Text(
-                      'Meu Petshop',
+                      'Pet+',
                       style: TextStyle(
                         color:
                             Theme.of(context).accentTextTheme.headline6.color,

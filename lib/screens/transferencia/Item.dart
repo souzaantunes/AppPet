@@ -2,12 +2,19 @@ import 'package:app/exceptions/http_exception.dart';
 import 'package:app/models/transferencia.dart';
 import 'package:app/providers/transferencias.dart';
 import 'package:app/screens/App_routes.dart';
+import 'package:app/util/DateUtil.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
 class ItemTransferencia extends StatelessWidget {
   final Transferencia _transferencia;
+
+  // Color cor = Colors.green;
+
+
+
+
 
   const ItemTransferencia(this._transferencia);
 
@@ -20,14 +27,26 @@ class ItemTransferencia extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DateUtil dataHoje = new DateUtil();
     final scaffold = Scaffold.of(context);
+   Color cor = Colors.green;
+      var dataPagamento = _transferencia.dataPagamento;
+      var formatData = dataHoje.formatDataDay();
+      if (formatData == dataPagamento) {
+        cor = Colors.redAccent;
+        // Colors.redAccent;
+        }
+      // Colors.green;
+
     return Card(
-        child: ListTile(
+          child:
+        ListTile(
       onTap: () => _selectTransferencia(context),
       leading: Icon(Icons.account_circle),
       title: Text(_transferencia.nomeDono.toString()),
       subtitle: Text(_transferencia.dataPagamento.toString(),
-          style: TextStyle(color: Colors.green)),
+          style:
+          TextStyle(color: cor)),
       // trailing: Text(_transferencia.dataPagamento.toString()),
       trailing: Container(
         width: 100,

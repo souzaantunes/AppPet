@@ -85,87 +85,89 @@ class _AuthCardState extends State<AuthCard> {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-    return Card(
-
-      elevation: 8.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Container(
-        height: _authMode == AuthMode.Login ? 290 : 371,
-        width: deviceSize.width * 0.75,
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-            key: _form,
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'email'),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value.isEmpty || !value.contains('@')) {
-                      return "Informe um email valido";
-                    }
-
-                    return null;
-                  },
-                  onSaved: (value) => _authData['email'] = value,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'senha'),
-                  controller: _passwordController,
-                  obscureText: true,
-                  validator: (value) {
-                    if (value.isEmpty || value.length < 5) {
-                      return "Informe uma senha valida";
-                    }
-
-                    return null;
-                  },
-                  onSaved: (value) => _authData['password'] = value,
-                ),
-                if (_authMode == AuthMode.Signup)
+    return Center(
+      child: Card(
+        elevation: 8.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Container(
+          // alignment: Alignment.center,
+          height: _authMode == AuthMode.Login ? 290 : 371,
+          width: deviceSize.width * 0.75,
+          padding: EdgeInsets.all(16.0),
+          child: Form(
+              key: _form,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Confirmar senha'),
+                    decoration: InputDecoration(labelText: 'email'),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value.isEmpty || !value.contains('@')) {
+                        return "Informe um email valido";
+                      }
+                      return null;
+                    },
+                    onSaved: (value) => _authData['email'] = value,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'senha'),
+                    controller: _passwordController,
                     obscureText: true,
-                    validator: _authMode == AuthMode.Signup
-                        ? (value) {
-                            if (value != _passwordController.text) {
-                              return "Senhas diferentes";
+                    validator: (value) {
+                      if (value.isEmpty || value.length < 5) {
+                        return "Informe uma senha valida";
+                      }
+                      return null;
+                    },
+                    onSaved: (value) => _authData['password'] = value,
+                  ),
+                  if (_authMode == AuthMode.Signup)
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Confirmar senha'),
+                      obscureText: true,
+                      validator: _authMode == AuthMode.Signup
+                          ? (value) {
+                              if (value != _passwordController.text) {
+                                return "Senhas diferentes";
+                              }
+                              return null;
                             }
-
-                            return null;
-                          }
-                        : null,
-                  ),
-                Spacer(),
-                // SizedBox(height: 22),
-                if (_isLoading)
-                  CircularProgressIndicator()
-                else
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                          : null,
                     ),
-                    color: Theme.of(context).primaryColor,
-                    textColor: Theme.of(context).primaryTextTheme.button.color,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 30.0,
-                      vertical: 8.0,
+                  Spacer(),
+                  // SizedBox(height: 22),
+                  if (_isLoading)
+                    CircularProgressIndicator()
+                  else
+                    RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      color: Theme.of(context).primaryColor,
+                      textColor:
+                          Theme.of(context).primaryTextTheme.button.color,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 30.0,
+                        vertical: 8.0,
+                      ),
+                      child: Text(
+                        _authMode == AuthMode.Login ? 'ENTRAR' : 'REGISTRAR',
+                      ),
+                      onPressed: _submit,
                     ),
+                  FlatButton(
+                    onPressed: _switchAuthMode,
                     child: Text(
-                      _authMode == AuthMode.Login ? 'ENTRAR' : 'REGISTRAR',
-                    ),
-                    onPressed: _submit,
+                        "Alternar P/${_authMode == AuthMode.Login ? 'REGISTRAR' : 'ENTRAR'}"),
+                    textColor: Theme.of(context).primaryColor,
                   ),
-                FlatButton(
-                  onPressed: _switchAuthMode,
-                  child: Text(
-                      "Alternar P/${_authMode == AuthMode.Login ? 'REGISTRAR' : 'ENTRAR'}"),
-                  textColor: Theme.of(context).primaryColor,
-                ),
-              ],
-            )),
+                ],
+              )),
+        ),
       ),
     );
   }

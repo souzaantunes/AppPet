@@ -30,8 +30,7 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> _authenticate(
-      String email, String password, String urlSegment) async {
+  Future<void> _authenticate(String email, String password, String urlSegment) async {
     final _url =
         'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=AIzaSyCpbKnxN2nrVMlLWa5U9ya7_N6CU69_4S4';
 
@@ -50,10 +49,7 @@ class Auth with ChangeNotifier {
       _token = responseBody["idToken"];
       _userId = responseBody["localId"];
       _expiryDate = DateTime.now().add(
-        Duration(
-          seconds: int.parse(responseBody["expiresIn"]),
-        ),
-      );
+        Duration(seconds: int.parse(responseBody["expiresIn"]),),);
       Store.saveMap('userData', {
         "token": _token,
         "user": _userId,
@@ -66,7 +62,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> signup(String email, String password) async {
-    return _authenticate(email, password, "sigUp");
+    return _authenticate(email, password, "signUp");
   }
 
   Future<void> login(String email, String password) async {

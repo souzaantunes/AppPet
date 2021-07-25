@@ -2,6 +2,14 @@ import 'package:intl/intl.dart';
 
 class DateUtil {
 
+  DateTime _data = new DateTime.now();
+
+  String formatDataDay() {
+
+    return DateFormat('dd/MM/yyyy').format(this._data);
+  }
+
+
  String formatTimestamp (int timestamp) {
    var format = new DateFormat ('dd/MM/yyyy');
    var date = new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
