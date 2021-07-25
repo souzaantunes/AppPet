@@ -64,7 +64,6 @@ class _AuthCardState extends State<AuthCard> {
     } catch (error) {
       _showErrorDialog("Erro inesperado");
     }
-
     setState(() {
       _isLoading = false;
     });
@@ -118,7 +117,7 @@ class _AuthCardState extends State<AuthCard> {
                     controller: _passwordController,
                     obscureText: true,
                     validator: (value) {
-                      if (value.isEmpty || value.length < 5) {
+                      if (value.isEmpty || value.length < 3) {
                         return "Informe uma senha valida";
                       }
                       return null;

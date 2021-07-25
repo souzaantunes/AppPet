@@ -8,8 +8,8 @@ import 'package:http/http.dart' as http;
 
 class Auth with ChangeNotifier {
   String _userId;
-  Timer _logoutTimer;
   String _token;
+  Timer _logoutTimer;
   DateTime _expiryDate;
 
   String get userId {
@@ -36,13 +36,13 @@ class Auth with ChangeNotifier {
 
     final response = await http.post(
       _url,
-      body: jsonEncode({
+      body: json.encode({
         "email": email,
         "password": password,
         "returnSecureToken": true,
       }),
     );
-    final responseBody = jsonDecode(response.body);
+    final responseBody = json.decode(response.body);
     if (responseBody["error"] != null) {
       throw AuthException(responseBody['error']['message']);
     } else {
@@ -70,27 +70,20 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> tryAutoLogin() async {
-    if (isAuth) {
-      return Future.value();
-    }
+    if (isAuth) {return Future.value();}
     final userDate = await Store.getMap('userDate');
-
     if (userDate == null) {
       return Future.value();
     }
-
-    final expiryDate = DateTime.parse(userDate['expiryDate']);
-
+    final expiryDate = DateTime.parse(userDate["expiryDate"]);
     if (expiryDate.isBefore(DateTime.now())) {
       return Future.value();
     }
     _userId = userDate["userId"];
     _token = userDate["token"];
     _expiryDate = expiryDate;
-
     _autoLogout();
     notifyListeners();
-
     return Future.value();
   }
 
@@ -102,7 +95,7 @@ class Auth with ChangeNotifier {
       _logoutTimer.cancel();
       _logoutTimer = null;
     }
-    Store.remove('userDate');
+    Store.remove('userData');
     notifyListeners();
   }
 
@@ -110,7 +103,6 @@ class Auth with ChangeNotifier {
     if (_logoutTimer != null) {
       _logoutTimer.cancel();
     }
-
     final timeToLogout = _expiryDate.difference(DateTime.now()).inSeconds;
     _logoutTimer = Timer(Duration(seconds: timeToLogout), logout);
   }
