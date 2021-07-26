@@ -30,7 +30,7 @@
 .pub-cache/
 .pub/
 /build/
-/flutter_test/
+/test/
 
 # Web related
 
