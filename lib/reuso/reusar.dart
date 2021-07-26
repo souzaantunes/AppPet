@@ -213,4 +213,14 @@
 // _formData['dataPagamento'] = value,
 // ),
 
-
+// Container(
+//   decoration: BoxDecoration(
+//       gradient: LinearGradient(
+//     colors: [
+//       Color.fromARGB(255, 117, 255, 05),
+//       Color.fromARGB(255, 188, 117, 09),
+//     ],
+//     begin: Alignment.topCenter,
+//     end: Alignment.bottomCenter,
+//   )),
+// ),

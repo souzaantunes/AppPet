@@ -1,66 +1,61 @@
 import 'dart:ui';
 
 import 'package:app/screens/login/auth_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TelaLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Scaffold(
-        body: Stack(
-          alignment: AlignmentDirectional.centerEnd,
-          children: <Widget>[
-            Container(
+    return Scaffold(
+      backgroundColor: Colors.deepPurple[100],
+      body: Container(
+        alignment: Alignment.center,
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            Stack(
               alignment: AlignmentDirectional.centerEnd,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 117, 255, 05),
-                  Color.fromARGB(255, 188, 117, 09),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              )),
-            ),
-            Container(
-              alignment: Alignment.center,
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    padding: EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 70,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.deepPurple.shade800,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 8,
-                          color: Colors.black54,
-                          offset: Offset(0, 3),
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 70,
                         ),
-                      ],
-                    ),
-                    child: Text(
-                      'Pet+',
-                      style: TextStyle(
-                        color:
-                            Theme.of(context).accentTextTheme.headline6.color,
-                        fontSize: 30,
-                        fontFamily: 'Atom',
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.deepPurple.shade800,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 8,
+                              color: Colors.black54,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          'Pet+',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontFamily: 'Atom',
+                          ),
+                        ),
                       ),
-                    ),
+                      AuthCard(),
+                    ],
                   ),
-                  AuthCard(),
-                ],
-              ),
-            )
+                ),
+              ],
+            ),
           ],
         ),
       ),

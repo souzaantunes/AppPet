@@ -21,7 +21,10 @@ class PetShopApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Transferencias>(
           create: (_) => new Transferencias(null, null, []),
           update: (ctx, auth, previousTransferencia) => new Transferencias(
-              auth.token, auth.userId, previousTransferencia.transferencias),
+            auth.token,
+            auth.userId,
+            previousTransferencia.transferencias,
+          ),
         ),
       ],
       child: MaterialApp(

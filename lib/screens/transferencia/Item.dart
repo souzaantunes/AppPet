@@ -32,12 +32,7 @@ class ItemTransferencia extends StatelessWidget {
    Color cor = Colors.green;
       var dataPagamento = _transferencia.dataPagamento;
       var formatData = dataHoje.formatDataDay();
-      if (formatData == dataPagamento) {
-        cor = Colors.redAccent;
-        // Colors.redAccent;
-        }
-      // Colors.green;
-
+      if (formatData == dataPagamento) {cor = Colors.redAccent;}
     return Card(
           child:
         ListTile(

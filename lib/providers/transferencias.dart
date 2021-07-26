@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:app/exceptions/http_exception.dart';
-import 'package:app/util/DateUtil.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/transferencia.dart';
 
 class Transferencias with ChangeNotifier {
-  final _baseUrl =
+  final String _baseUrl =
       'https://flutter-elton-default-rtdb.firebaseio.com/transferencias';
   List<Transferencia> _transferencias = [];
 
@@ -25,6 +25,7 @@ class Transferencias with ChangeNotifier {
   Future<void> loadTransferencia() async {
     final response = await http.get("$_baseUrl/$_userId.json?auth=$_token");
     Map<String, dynamic> data = json.decode(response.body);
+    print(json.decode(response.body));
     _transferencias.clear();
     if (data != null) {
       data.forEach((transferenciaID, transferenciaData) {
@@ -59,18 +60,22 @@ class Transferencias with ChangeNotifier {
         'valor': newTransfer.valor,
       }),
     );
-    _transferencias.add(
-      Transferencia(
-        id: json.decode(response.body)['name'],
-        nomedoCachorro: newTransfer.nomedoCachorro,
-        nomeDono: newTransfer.nomeDono,
-        telefone: newTransfer.telefone,
-        endereco: newTransfer.endereco,
-        pacoteDeBanho: newTransfer.pacoteDeBanho,
-        dataPagamento: newTransfer.dataPagamento,
-        valor: newTransfer.valor,
-      ),
-    );
+    if(response.statusCode.isNegative){
+      _transferencias.add(
+        Transferencia(
+          id: json.decode(response.body)['name'],
+          nomedoCachorro: newTransfer.nomedoCachorro,
+          nomeDono: newTransfer.nomeDono,
+          telefone: newTransfer.telefone,
+          endereco: newTransfer.endereco,
+          pacoteDeBanho: newTransfer.pacoteDeBanho,
+          dataPagamento: newTransfer.dataPagamento,
+          valor: newTransfer.valor,
+        ),
+      );
+    } else{
+      print("Erro de banco");
+    }
     notifyListeners();
   }
 
