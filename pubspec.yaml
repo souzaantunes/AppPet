@@ -24,12 +24,13 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^4.0.5
-  intl: ^0.16.1
+  intl: ^0.16.0
   http: ^0.12.1
-  shared_preferences: ^0.5.7+3
+  shared_preferences: ^0.5.7
   date_format: ^2.0.2
   flutter_datetime_formfield: ^0.1.2
   mask_text_input_formatter: ^2.0.0
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -44,9 +45,9 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "dev_assets/petshop-adptive.png"
+  image_path: "dev_assets/petshop.png"
   adaptive_icon_background: "#af8eb5"
-  adaptive_icon_foreground: "dev_assets/petshop.png"
+  adaptive_icon_foreground: "dev_assets/petshop-adaptive.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

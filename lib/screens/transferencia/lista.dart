@@ -1,4 +1,3 @@
-
 import 'package:app/providers/Auth.dart';
 import 'package:app/providers/transferencias.dart';
 import 'package:app/screens/App_routes.dart';
@@ -18,20 +17,21 @@ class ListTransferencia extends StatefulWidget {
 class ListaTransferenciaState extends State<ListTransferencia> {
   bool _isLoading = true;
 
-  Future<void> _refreshTransferencia(BuildContext context){
+  Future<void> _refreshTransferencia(BuildContext context) {
     return Provider.of<Transferencias>(context, listen: false)
-        .loadTransferencia();}
+        .loadTransferencia();
+  }
 
   @override
   void initState() {
     super.initState();
-    // Provider.of<Transferencias>(context, listen: false)
-        // .loadTransferencia()
-        // .then((_) {
-    setState(() {
-      _isLoading = false;
+    Provider.of<Transferencias>(context, listen: false)
+        .loadTransferencia()
+        .then((_) {
+      setState(() {
+        _isLoading = false;
+      });
     });
-    // });
   }
 
   @override
@@ -51,13 +51,15 @@ class ListaTransferenciaState extends State<ListTransferencia> {
         ],
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator(),)
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
           : RefreshIndicator(
               onRefresh: () => _refreshTransferencia(context),
               child: ListView.builder(
                 itemCount: transfer.length,
                 itemBuilder: (context, indice) =>
-                 ItemTransferencia(transfer[indice]),
+                    ItemTransferencia(transfer[indice]),
               ),
             ),
       floatingActionButton: FloatingActionButton(

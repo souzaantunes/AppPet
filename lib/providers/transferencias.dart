@@ -60,7 +60,7 @@ class Transferencias with ChangeNotifier {
         'valor': newTransfer.valor,
       }),
     );
-    if(response.statusCode.isNegative){
+
       _transferencias.add(
         Transferencia(
           id: json.decode(response.body)['name'],
@@ -73,9 +73,6 @@ class Transferencias with ChangeNotifier {
           valor: newTransfer.valor,
         ),
       );
-    } else{
-      print("Erro de banco");
-    }
     notifyListeners();
   }
 

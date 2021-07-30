@@ -1,4 +1,4 @@
-package br.com.software.pet;
+package br.com.softwarEtecn.pet;
 
 import io.flutter.embedding.android.FlutterActivity;
 

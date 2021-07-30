@@ -1,0 +1,8 @@
+<root>
+    <item name='io.flutter.plugins.sharedpreferences.MethodCallHandlerImpl void commitAsync(android.content.SharedPreferences.Editor, MethodChannel.Result) 1'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+    <item name='io.flutter.plugins.sharedpreferences.MethodCallHandlerImpl void onMethodCall(MethodCall, MethodChannel.Result) 1'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>
