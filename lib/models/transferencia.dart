@@ -10,6 +10,7 @@ class Transferencia with ChangeNotifier {
   final String pacoteDeBanho;
   final String dataPagamento;
   final double valor;
+  bool finalizado;
   // final DateTime datacadastro = DateTime.now();
 
   Transferencia(
@@ -20,7 +21,8 @@ class Transferencia with ChangeNotifier {
       this.endereco,
       this.pacoteDeBanho,
       this.dataPagamento,
-      this.valor});
+      this.valor,
+      this.finalizado});
 
 // @override
 // String toString() {

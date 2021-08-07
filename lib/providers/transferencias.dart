@@ -11,6 +11,7 @@ class Transferencias with ChangeNotifier {
   final String _baseUrl =
       'https://flutter-elton-default-rtdb.firebaseio.com/transferencias';
   List<Transferencia> _transferencias = [];
+  bool pagou;
 
   List<Transferencia> get transferencias => [..._transferencias];
   String _token;
@@ -23,7 +24,7 @@ class Transferencias with ChangeNotifier {
   }
 
   Future<void> loadTransferencia() async {
-    final response = await http.get("$_baseUrl/$_userId.json?auth=$_token");
+    final response = await http.get("$_baseUrl/$_userId.json?auth=$_token&?finalizado=$pagou");
     Map<String, dynamic> data = json.decode(response.body);
     print(json.decode(response.body));
     _transferencias.clear();
@@ -58,6 +59,7 @@ class Transferencias with ChangeNotifier {
         'pacoteDeBanho': newTransfer.pacoteDeBanho,
         'dataPagamento': newTransfer.dataPagamento,
         'valor': newTransfer.valor,
+        'finalizado' : newTransfer.finalizado,
       }),
     );
 
@@ -71,6 +73,7 @@ class Transferencias with ChangeNotifier {
           pacoteDeBanho: newTransfer.pacoteDeBanho,
           dataPagamento: newTransfer.dataPagamento,
           valor: newTransfer.valor,
+          finalizado: newTransfer.finalizado
         ),
       );
     notifyListeners();
@@ -83,7 +86,7 @@ class Transferencias with ChangeNotifier {
     final index = _transferencias
         .indexWhere((transfer) => transfer.id == transferencia.id);
     if (index >= 0) {
-      await http.patch(
+      await http.put(
         "$_baseUrl/$_userId/${transferencia.id}.json?auth=$_token",
         body: json.encode({
           'nomedoCachorro': transferencia.nomedoCachorro,
@@ -93,6 +96,7 @@ class Transferencias with ChangeNotifier {
           'pacoteDeBanho': transferencia.pacoteDeBanho,
           'dataPagamento': transferencia.dataPagamento,
           'valor': transferencia.valor,
+          'finalizado' : false,
         }),
       );
       _transferencias[index] = transferencia;
@@ -111,9 +115,27 @@ class Transferencias with ChangeNotifier {
       if (response.statusCode >= 400) {
         _transferencias.insert(index, transferencias);
         notifyListeners();
-        throw HttpException('Ocorreu um problena na exclusao do Cdastro');
+        throw HttpException('Ocorreu um problena na exclusao do Cadastro');
       }
       // _transferencias.removeWhere((transfer) => transfer.id == id);
+    }
+  }
+
+  Future<void> removeItemList(String id) async {
+    final index = _transferencias.indexWhere((transfer) => transfer.id == id);
+    if(index >=0) {
+      final transferencia = _transferencias[index];
+      _transferencias.remove(transferencia);
+      notifyListeners();
+      pagou = false;
+      final response = await http.patch(
+        "$_baseUrl/$_userId/${transferencia.id}.json?auth=$_token",
+        body: json.encode({'finalizado': true,}),);
+      if (response.statusCode >= 400) {
+        _transferencias.insert(index, transferencia);
+        notifyListeners();
+        throw HttpException('Ocorreu um problena na exclusao do Cadastro');
+      }
     }
   }
 }

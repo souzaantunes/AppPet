@@ -1,20 +1,14 @@
-import 'package:app/exceptions/http_exception.dart';
+import 'package:app/components/check_box.dart';
 import 'package:app/models/transferencia.dart';
-import 'package:app/providers/transferencias.dart';
 import 'package:app/screens/App_routes.dart';
 import 'package:app/util/DateUtil.dart';
+
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
+
 
 class ItemTransferencia extends StatelessWidget {
   final Transferencia _transferencia;
-
-  // Color cor = Colors.green;
-
-
-
-
 
   const ItemTransferencia(this._transferencia);
 
@@ -24,11 +18,9 @@ class ItemTransferencia extends StatelessWidget {
       arguments: _transferencia,
     );
   }
-
   @override
   Widget build(BuildContext context) {
     final DateUtil dataHoje = new DateUtil();
-    final scaffold = Scaffold.of(context);
    Color cor = Colors.green;
       var dataPagamento = _transferencia.dataPagamento;
       var formatData = dataHoje.formatDataDay();
@@ -37,60 +29,25 @@ class ItemTransferencia extends StatelessWidget {
           child:
         ListTile(
       onTap: () => _selectTransferencia(context),
-      leading: Icon(Icons.account_circle),
+      leading:   CheckBoxDeVenda(_transferencia) ,
       title: Text(_transferencia.nomeDono.toString()),
       subtitle: Text(_transferencia.dataPagamento.toString(),
           style:
           TextStyle(color: cor)),
-      // trailing: Text(_transferencia.dataPagamento.toString()),
       trailing: Container(
+        alignment: Alignment.centerLeft,
         width: 100,
         child: Row(
+          mainAxisAlignment:MainAxisAlignment.spaceEvenly ,
           children: <Widget>[
             IconButton(
+                alignment: Alignment.centerLeft,
                 icon: Icon(Icons.edit),
                 color: Theme.of(context).primaryColor,
                 onPressed: () {
                   Navigator.of(context).pushNamed(
                     AppRoutes.PRODUCT_FORM,
                     arguments: _transferencia,
-                  );
-                }),
-            IconButton(
-                icon: Icon(Icons.delete),
-                color: Theme.of(context).primaryColor,
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (ctx) => AlertDialog(
-                      title: Text("Excluir"),
-                      content: Text('Tem certeza?'),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text('Nao'),
-                          onPressed: () => Navigator.of(context).pop(false),
-                        ),
-                        FlatButton(
-                          child: Text('sim'),
-                          onPressed: () => Navigator.of(context).pop(true),
-                        ),
-                      ],
-                    ),
-                  ).then(
-                    (value) async {
-                      if (value) {
-                        try {
-                          await Provider.of<Transferencias>(context, listen: false)
-                              .deleteTransferencia(_transferencia.id);
-                        } on HttpException catch (error) {
-                          scaffold.showSnackBar(
-                            SnackBar(
-                              content: Text(error.toString()),
-                            ),
-                          );
-                        }
-                      }
-                    },
                   );
                 }),
           ],

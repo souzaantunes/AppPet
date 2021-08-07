@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:app/screens/login/auth_card.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 class TelaLogin extends StatelessWidget {

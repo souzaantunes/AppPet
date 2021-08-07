@@ -13,8 +13,7 @@ class FormularioFormTransferencia extends StatefulWidget {
   }
 }
 
-class FormularioFormTransferenciaState
-    extends State<FormularioFormTransferencia> {
+class FormularioFormTransferenciaState extends State<FormularioFormTransferencia> {
   final formatterPhone = MaskTextInputFormatter(mask: '+## (##) #####-####');
   final formatterDate = MaskTextInputFormatter(mask: '##/##/####');
   final _priceFocusNode = FocusNode();
@@ -43,6 +42,7 @@ class FormularioFormTransferenciaState
         _formData['pacoteDeBanho'] = transferencia.pacoteDeBanho;
         _formData['dataPagamento'] = transferencia.dataPagamento;
         _formData['valor'] = transferencia.valor;
+        _formData['finalizado'] = false;
       } else {
         _formData['valor'] = '';
       }
@@ -71,6 +71,7 @@ class FormularioFormTransferenciaState
       pacoteDeBanho: _formData['pacoteDeBanho'],
       dataPagamento: _formData['dataPagamento'],
       valor: _formData['valor'],
+      finalizado: false,
     );
     setState(() {
       _isLoading = true;

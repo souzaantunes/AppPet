@@ -1,4 +1,5 @@
-import 'package:app/components/cira%C3%A7ao_login.dart';
+
+import 'package:app/components/criar_login.dart';
 import 'package:app/providers/Auth.dart';
 import 'package:app/screens/transferencia/lista.dart';
 import 'package:flutter/material.dart';
