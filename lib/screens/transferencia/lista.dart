@@ -1,9 +1,11 @@
+import 'package:app/models/transferencia.dart';
 import 'package:app/providers/Auth.dart';
 import 'package:app/providers/transferencias.dart';
 import 'package:app/screens/App_routes.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'Item.dart';
 
@@ -21,7 +23,6 @@ class ListaTransferenciaState extends State<ListTransferencia> {
     return Provider.of<Transferencias>(context, listen: false)
         .loadTransferencia();
   }
-
   @override
   void initState() {
     super.initState();
@@ -37,8 +38,8 @@ class ListaTransferenciaState extends State<ListTransferencia> {
   @override
   Widget build(BuildContext context) {
     final transfer = Provider.of<Transferencias>(context).transferencias;
-    return Scaffold(
-      appBar: AppBar(
+    return  Scaffold(
+      appBar:  AppBar(
         title: Text('Cadastros de Banho'),
         actions: <Widget>[
           IconButton(

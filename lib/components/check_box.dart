@@ -7,6 +7,7 @@ class CheckBoxDeVenda extends StatefulWidget {
   final Transferencia transferencia;
 
   const CheckBoxDeVenda(this.transferencia);
+
   @override
   State<StatefulWidget> createState() {
     return _CheckBoxDeVendaState();
@@ -15,19 +16,21 @@ class CheckBoxDeVenda extends StatefulWidget {
 
 class _CheckBoxDeVendaState extends State<CheckBoxDeVenda> {
   bool caixa = false;
+  bool tr = false;
 
   @override
   Widget build(BuildContext context) {
-    // final scaffold = Scaffold.of(context);
     return Checkbox(
-        value: caixa,
-        activeColor: Theme.of(context).primaryColor,
-        onChanged: (value) async {
-          setState(() {
-            this.caixa = value;
-          });
-          await Provider.of<Transferencias>(context, listen: false)
-              .removeItemList(this.widget.transferencia.id);
+      value: caixa,
+      activeColor: Theme.of(context).primaryColor,
+      onChanged: (value) async {
+        setState(() {
+          this.caixa = value;
         });
+        this.caixa = !value;
+        await Provider.of<Transferencias>(context, listen: false)
+            .removeItemList(this.widget.transferencia.id);
+      },
+    );
   }
 }

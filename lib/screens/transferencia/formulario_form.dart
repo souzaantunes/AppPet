@@ -14,7 +14,7 @@ class FormularioFormTransferencia extends StatefulWidget {
 }
 
 class FormularioFormTransferenciaState extends State<FormularioFormTransferencia> {
-  final formatterPhone = MaskTextInputFormatter(mask: '+## (##) #####-####');
+  final formatterPhone = MaskTextInputFormatter(mask: '(##) #####-####');
   final formatterDate = MaskTextInputFormatter(mask: '##/##/####');
   final _priceFocusNode = FocusNode();
   final _valorFocusNode = FocusNode();

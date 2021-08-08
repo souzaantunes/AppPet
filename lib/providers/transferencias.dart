@@ -1,17 +1,14 @@
 import 'dart:convert';
 
 import 'package:app/exceptions/http_exception.dart';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import '../models/transferencia.dart';
 
 class Transferencias with ChangeNotifier {
   final String _baseUrl =
       'https://flutter-elton-default-rtdb.firebaseio.com/transferencias';
   List<Transferencia> _transferencias = [];
-  bool pagou;
 
   List<Transferencia> get transferencias => [..._transferencias];
   String _token;
@@ -23,8 +20,9 @@ class Transferencias with ChangeNotifier {
     return _transferencias.length;
   }
 
+  // auth=$_token&?
   Future<void> loadTransferencia() async {
-    final response = await http.get("$_baseUrl/$_userId.json?auth=$_token&?finalizado=$pagou");
+    final response = await http.get("$_baseUrl/$_userId.json");
     Map<String, dynamic> data = json.decode(response.body);
     print(json.decode(response.body));
     _transferencias.clear();
@@ -40,8 +38,12 @@ class Transferencias with ChangeNotifier {
             pacoteDeBanho: transferenciaData['pacoteDeBanho'],
             dataPagamento: transferenciaData['dataPagamento'],
             valor: transferenciaData['valor'],
+            finalizado: transferenciaData['finalizado'],
           ),
         );
+        _transferencias
+            .removeWhere((transferencia) => transferencia.finalizado == true);
+        notifyListeners();
       });
       notifyListeners();
     }
@@ -59,12 +61,11 @@ class Transferencias with ChangeNotifier {
         'pacoteDeBanho': newTransfer.pacoteDeBanho,
         'dataPagamento': newTransfer.dataPagamento,
         'valor': newTransfer.valor,
-        'finalizado' : newTransfer.finalizado,
+        'finalizado': newTransfer.finalizado,
       }),
     );
-
-      _transferencias.add(
-        Transferencia(
+    _transferencias.add(
+      Transferencia(
           id: json.decode(response.body)['name'],
           nomedoCachorro: newTransfer.nomedoCachorro,
           nomeDono: newTransfer.nomeDono,
@@ -73,9 +74,8 @@ class Transferencias with ChangeNotifier {
           pacoteDeBanho: newTransfer.pacoteDeBanho,
           dataPagamento: newTransfer.dataPagamento,
           valor: newTransfer.valor,
-          finalizado: newTransfer.finalizado
-        ),
-      );
+          finalizado: newTransfer.finalizado),
+    );
     notifyListeners();
   }
 
@@ -96,7 +96,7 @@ class Transferencias with ChangeNotifier {
           'pacoteDeBanho': transferencia.pacoteDeBanho,
           'dataPagamento': transferencia.dataPagamento,
           'valor': transferencia.valor,
-          'finalizado' : false,
+          'finalizado': false,
         }),
       );
       _transferencias[index] = transferencia;
@@ -123,14 +123,16 @@ class Transferencias with ChangeNotifier {
 
   Future<void> removeItemList(String id) async {
     final index = _transferencias.indexWhere((transfer) => transfer.id == id);
-    if(index >=0) {
+    if (index >= 0) {
       final transferencia = _transferencias[index];
       _transferencias.remove(transferencia);
       notifyListeners();
-      pagou = false;
       final response = await http.patch(
         "$_baseUrl/$_userId/${transferencia.id}.json?auth=$_token",
-        body: json.encode({'finalizado': true,}),);
+        body: json.encode({
+          'finalizado': true,
+        }),
+      );
       if (response.statusCode >= 400) {
         _transferencias.insert(index, transferencia);
         notifyListeners();
