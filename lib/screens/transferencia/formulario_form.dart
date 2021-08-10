@@ -92,7 +92,7 @@ class FormularioFormTransferenciaState extends State<FormularioFormTransferencia
                 title: Text('Ocorreu um erro!'),
                 content: Text('Erro ao salvar o cadastro'),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text('Ok'),
                     onPressed: () => Navigator.of(context).pop(),
                   )
@@ -210,8 +210,7 @@ class FormularioFormTransferenciaState extends State<FormularioFormTransferencia
                       onSaved: (value) =>
                           _formData['valor'] = double.parse(value),
                     ),
-                    // ignore: deprecated_member_use
-                    RaisedButton(
+                    ElevatedButton(
                       child: Text('confirmar'),
                       onPressed: () => _saveForm(),
                     )

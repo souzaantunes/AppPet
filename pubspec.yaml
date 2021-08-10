@@ -31,7 +31,9 @@ dependencies:
   flutter_datetime_formfield: ^0.1.2
   mask_text_input_formatter: ^2.0.0
   rflutter_alert: ^2.0.4
-
+  firebase_messaging: ^10.0.4
+  firebase_core: ^1.4.0
+  flutter_local_notifications: ^5.0.0+4
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -1,11 +1,11 @@
 import 'package:app/components/check_box.dart';
 import 'package:app/models/transferencia.dart';
 import 'package:app/screens/App_routes.dart';
-import 'package:app/screens/transferencia/lista.dart';
+
 import 'package:app/util/DateUtil.dart';
 
 import 'package:flutter/material.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+
 
 class ItemTransferencia extends StatelessWidget {
   final Transferencia _transferencia;
@@ -21,14 +21,14 @@ class ItemTransferencia extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool alerta = false;
+    // bool alerta = false;
     final DateUtil dataHoje = new DateUtil();
     Color cordata = Colors.green;
     var dataPagamento = _transferencia.dataPagamento;
     var formatData = dataHoje.formatDataDay();
     if (formatData == dataPagamento) {
       cordata = Colors.redAccent;
-      alerta = true;
+      // alerta = true;
     }
 
     return Card(

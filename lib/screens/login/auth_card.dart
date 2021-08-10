@@ -27,7 +27,7 @@ class _AuthCardState extends State<AuthCard> {
         title: Text('Ocorreu um erro!'),
         content: Text(msg),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
