@@ -1,5 +1,7 @@
 import 'package:app/providers/Auth.dart';
 import 'package:app/providers/transferencias.dart';
+import 'package:app/pushNotification/notificacao_Config.dart';
+import 'package:app/pushNotification/token.dart';
 import 'package:app/screens/App_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -26,17 +28,15 @@ class ListaTransferenciaState extends State<ListTransferencia> {
 
   @override
   void initState() {
+   final Token token  = Token();
     super.initState();
-    // final fbm = FirebaseMessaging.instance;
-    // final Future<FirebaseApp> _init = Firebase.initializeApp();
-    //
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //   RemoteNotification notification = message.notification;
-    // });
-    // FirebaseMessaging.onMessageOpenedApp.map((event) => print("oned"));
-    // FirebaseMessaging.onBackgroundMessage((message) => null);
-    // fbm.requestPermission();
+   token.gerarToken().then((Token) => {
+   print(token.token),
+   });
 
+
+
+   new NotificacaoConfig().configure();
     Provider.of<Transferencias>(context, listen: false)
         .loadTransferencia()
         .then((_) {
