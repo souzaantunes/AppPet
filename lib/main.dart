@@ -1,11 +1,13 @@
 import 'package:app/providers/Auth.dart';
 import 'package:app/providers/transferencias.dart';
+import 'package:app/pushNotification/push_Onesignal.dart';
 import 'package:app/screens/App_routes.dart';
 import 'package:app/screens/home/auth_home_screen.dart';
 import 'package:app/screens/transferencia/formulario_form.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 void main() => runApp(PetShopApp());
@@ -13,6 +15,7 @@ void main() => runApp(PetShopApp());
 class PetShopApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    PushOnesignal.config();
     final Future<FirebaseApp> _init = Firebase.initializeApp();
     return FutureBuilder(
       future: _init,

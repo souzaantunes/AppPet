@@ -1,10 +1,10 @@
 import 'package:app/providers/Auth.dart';
 import 'package:app/providers/transferencias.dart';
-import 'package:app/pushNotification/notificacao_Config.dart';
-import 'package:app/pushNotification/token.dart';
+
+import 'package:app/pushNotification/push_Onesignal.dart';
+
 import 'package:app/screens/App_routes.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,15 +28,8 @@ class ListaTransferenciaState extends State<ListTransferencia> {
 
   @override
   void initState() {
-   final Token token  = Token();
     super.initState();
-   token.gerarToken().then((Token) => {
-   print(token.token),
-   });
-
-
-
-   new NotificacaoConfig().configure();
+    PushOnesignal.config();
     Provider.of<Transferencias>(context, listen: false)
         .loadTransferencia()
         .then((_) {
