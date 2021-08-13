@@ -1,10 +1,8 @@
 import 'package:app/providers/Auth.dart';
 import 'package:app/providers/transferencias.dart';
 
-import 'package:app/pushNotification/push_Onesignal.dart';
-
+import 'package:app/pushNotification/push_onesignal.dart';
 import 'package:app/screens/App_routes.dart';
-
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

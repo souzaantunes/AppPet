@@ -32,6 +32,7 @@
 /build/
 /test/
 
+
 # Web related
 
 
@@ -50,3 +51,4 @@ app.*.map.json
 
 
 **/android/key.properties
+***/pushNotification/push_notification_remoto.dart

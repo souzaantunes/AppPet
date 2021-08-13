@@ -2,9 +2,12 @@ import 'package:intl/intl.dart';
 
 class DateUtil {
 
-  DateTime _data = new DateTime.now();
+  DateTime _datanow = new DateTime.now();
+  DateTime _data;
 
-  String formatDataDay() {return DateFormat('dd/MM/yyyy').format(this._data);}
+  String formatDataDay() {return DateFormat('dd/MM/yyyy').format(this._datanow);}
+
+
 
 //
 //  String formatTimestamp (int timestamp) {
