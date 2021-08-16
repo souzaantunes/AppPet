@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 class ItemTransferencia extends StatelessWidget {
   final Transferencia _transferencia;
 
+
   const ItemTransferencia(this._transferencia);
 
   void _selectTransferencia(BuildContext context) {
@@ -19,16 +20,23 @@ class ItemTransferencia extends StatelessWidget {
     );
   }
 
+  // void _pushDataVencimento(bool vecimento){
+  //   final DateUtil dataHoje = new DateUtil();
+  //   if(vecimento == true & dataHoje.formatDataDayHour() == ){
+  //
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
-    // bool alerta = false;
+    bool alerta = false;
     final DateUtil dataHoje = new DateUtil();
     Color cordata = Colors.green;
     var dataPagamento = _transferencia.dataPagamento;
     var formatData = dataHoje.formatDataDay();
     if (formatData == dataPagamento) {
       cordata = Colors.redAccent;
-      // alerta = true;
+     alerta = true;
     }
 
     return Card(

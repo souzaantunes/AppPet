@@ -1,13 +1,16 @@
 import 'package:intl/intl.dart';
 
 class DateUtil {
-
   DateTime _datanow = new DateTime.now();
-  DateTime _data;
+  DateTime _datahora;
 
-  String formatDataDay() {return DateFormat('dd/MM/yyyy').format(this._datanow);}
+  String formatDataDay() {
+    return DateFormat('dd/MM/yyyy').format(this._datanow);
+  }
 
-
+  String formatDataDayHour() {
+    return DateFormat('dd/MM/yyyy HH:mm:ss').format(this._datahora);
+  }
 
 //
 //  String formatTimestamp (int timestamp) {

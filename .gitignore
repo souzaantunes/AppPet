@@ -51,4 +51,4 @@ app.*.map.json
 
 
 **/android/key.properties
-***/pushNotification/push_notification_remoto.dart
+*lib/pushNotification/push_notification_remoto.dart

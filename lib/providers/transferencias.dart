@@ -41,8 +41,7 @@ class Transferencias with ChangeNotifier {
             finalizado: transferenciaData['finalizado'],
           ),
         );
-        _transferencias
-            .removeWhere((transferencia) => transferencia.finalizado == true);
+        _transferencias.removeWhere((transferencia) => transferencia.finalizado == true);
         notifyListeners();
       });
       notifyListeners();
